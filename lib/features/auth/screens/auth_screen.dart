@@ -1,3 +1,4 @@
+import 'package:amazon_clone/common/widgets/custom_button.dart';
 import 'package:amazon_clone/common/widgets/custom_textfield.dart';
 import 'package:amazon_clone/constants/global_variables.dart';
 import 'package:flutter/material.dart';
@@ -43,10 +44,15 @@ class _AuthScreenState extends State<AuthScreen> {
        body: Padding(
          padding: const EdgeInsets.all(8.0),
          child: SafeArea(
-           child: Column(children: [
+           child: Column(
+             crossAxisAlignment: CrossAxisAlignment.start,
+               children: [
              const Text('Welcome',style:
            TextStyle(fontSize: 22,fontWeight: FontWeight.w500),),
            ListTile(
+             tileColor: _auth==Auth.signup ?
+             GlobalVariables.backgroundColor:
+             GlobalVariables.greyBackgroundCOlor,
              leading: Radio(
                groupValue: _auth,//this is for the default value
                activeColor: GlobalVariables.secondaryColor,
@@ -67,14 +73,19 @@ class _AuthScreenState extends State<AuthScreen> {
                  child: Column(
                    children: [
                      CustomTextField(controller:_nameController ,hintext: 'Name',),
-                     SizedBox(height: 10),
+                     const SizedBox(height: 10),
                      CustomTextField(controller:_emailController ,hintext: 'Email',),
-                     SizedBox(height: 10,),
-                     CustomTextField(controller:_passwordController,hintext: 'Password',)
+                    const  SizedBox(height: 10,),
+                     CustomTextField(controller:_passwordController,hintext: 'Password',),
+                     const SizedBox(height: 10,),
+                     CustomButton(text:'Sign Up', onTap: (){})
                    ],
                  )),
                ),
              ListTile(
+               tileColor: _auth==Auth.signin?
+               GlobalVariables.backgroundColor:
+               GlobalVariables.greyBackgroundCOlor,
                leading: Radio(
                  groupValue: _auth,//this is for the default value
                  activeColor: GlobalVariables.secondaryColor,
@@ -84,7 +95,27 @@ class _AuthScreenState extends State<AuthScreen> {
                  }),
                ),
                title: const Text('Sign-In',style: TextStyle(fontWeight: FontWeight.bold)),
-             )]),
+             ),
+               if(_auth==Auth.signin)
+                 Container(
+                   color: GlobalVariables.backgroundColor,
+                   padding: const EdgeInsets.all(8),
+                   child: Form(key:_signInFormKey,
+                       child: Column(
+                         children: [
+
+                           CustomTextField(controller:_emailController ,hintext: 'Email',),
+                           const  SizedBox(height: 10,),
+                           CustomTextField(controller:_passwordController,hintext: 'Password',),
+                           const SizedBox(height: 10,),
+                           CustomButton(text:'Sign IN', onTap: (){})
+                         ],
+                       )),
+                 )
+
+
+
+                 ]),
          ),
        ),
     );
