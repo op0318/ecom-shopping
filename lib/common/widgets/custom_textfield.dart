@@ -19,7 +19,12 @@ class CustomTextField extends StatelessWidget {
     )
     ),
       validator: (val){
+        if(val==null||val.isEmpty)
+          {
+            return 'Enter your $hintext';
 
+          }
+        return null;
       },//With this validator we can validate and any eroors is thrown,it will be called by the Form
 
     );
