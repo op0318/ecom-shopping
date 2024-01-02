@@ -1,6 +1,5 @@
 
 import 'dart:convert';
-import 'dart:js';
 
 import 'package:amazon_clone/constants/utils.dart';
 import 'package:flutter/cupertino.dart';
@@ -25,12 +24,11 @@ void httpErrorHandle({
       return onSucces();
       break;
     case 400:
-      return ShowSnakbar(snackbar ,jsonDecode(response.body)(['msg']));
+      return ShowSnakbar(snackbar ,jsonDecode(response.body)['msg']);
       break;
     case 500:
-      return ShowSnakbar(snackbar, jsonDecode(response.body)(['error']));
-      break;
-    default:
+      return ShowSnakbar(snackbar, jsonDecode(response.body)['error']);
+      default:
       ShowSnakbar(snackbar,jsonDecode(response.body));
 
   }

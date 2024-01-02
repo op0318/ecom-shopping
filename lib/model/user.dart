@@ -20,20 +20,20 @@ User({
   required this.type});
 
 
-//conver the class data to json object
+//convert the class data to json object
 Map<String,dynamic>jsonobject()
 {
   return {
     'id':id,
   'name':name,
+    'email':email,
   'password':password,
   'address':address,
   'token':token,
   'type':type};
 }
 //convert the json string to new json object
-
-factory User.classobject(Map<String,dynamic>Map){
+  factory User.classobject(Map<String,dynamic>Map){
   return User(
     id: Map['_id']??'',
     name: Map['name']??'',

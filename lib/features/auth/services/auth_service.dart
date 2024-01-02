@@ -28,18 +28,20 @@ class Authservice
               type: '');
           //Post api service
           http.Response res= await http.post(
-              Uri.parse('$uri/api/signup'),
+              Uri.parse('$uri'),
               body: user.tojson(),
           headers: <String,String>{
                 'Content-Type':'application/json;charset=UTF-8'
           });
           httpErrorHandle(response: res, snackbar:context , onSucces: (){
             ShowSnakbar(context,'Account has been created with the same credentials');
+
           });
         }
         catch(e)
     {
-      ShowSnakbar(context, e.toString());
+
+        ShowSnakbar(context, e.toString());
 
     }
 

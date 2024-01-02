@@ -88,7 +88,16 @@ class _AuthScreenState extends State<AuthScreen> {
                     const  SizedBox(height: 10,),
                      CustomTextField(controller:_passwordController,hintext: 'Password',),
                      const SizedBox(height: 10,),
-                     CustomButton(text:'Sign Up', onTap: (){})
+                     CustomButton(text:'Sign Up', onTap: (){
+                       if(_signupFormKey.currentState!.validate())
+                         {
+                           Signupuser();
+
+                         }
+
+
+
+                     })
                    ],
                  )),
                ),
@@ -118,7 +127,9 @@ class _AuthScreenState extends State<AuthScreen> {
                            const  SizedBox(height: 10,),
                            CustomTextField(controller:_passwordController,hintext: 'Password',),
                            const SizedBox(height: 10,),
-                           CustomButton(text:'Sign IN', onTap: (){})
+                           CustomButton(text:'Sign IN', onTap: (){
+
+                           })
                          ],
                        )),
                  )
