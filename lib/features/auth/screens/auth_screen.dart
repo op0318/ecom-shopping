@@ -39,6 +39,14 @@ class _AuthScreenState extends State<AuthScreen> {
         email: _emailController.text,
         password: _passwordController.text);
   }
+  void SigninUser()
+  {
+    authService.SigninUser(
+        context: context,
+        email: _emailController.text,
+        password: _passwordController.text
+    );
+  }
   @override
   void dispose()
   {
@@ -92,11 +100,7 @@ class _AuthScreenState extends State<AuthScreen> {
                        if(_signupFormKey.currentState!.validate())
                          {
                            Signupuser();
-
                          }
-
-
-
                      })
                    ],
                  )),
@@ -128,6 +132,12 @@ class _AuthScreenState extends State<AuthScreen> {
                            CustomTextField(controller:_passwordController,hintext: 'Password',),
                            const SizedBox(height: 10,),
                            CustomButton(text:'Sign IN', onTap: (){
+                             if(_signInFormKey.currentState!.validate())
+                               {
+
+                                 SigninUser();
+
+                               }
 
                            })
                          ],

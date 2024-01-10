@@ -48,8 +48,15 @@ Map<String,dynamic>jsonobject()
 //to make a json String
 String tojson()=>jsonEncode(jsonobject());
 
+
+
+
+
 //to make a class object
-factory User.fromJson(String source)=>User.classobject(json.decode(source));
+factory User.fromJson(String source)
+{
+ return  User.classobject(json.decode(source));
+}
 
 
 }
