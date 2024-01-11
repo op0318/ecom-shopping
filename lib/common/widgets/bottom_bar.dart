@@ -1,4 +1,6 @@
 import 'package:amazon_clone/constants/global_variables.dart';
+import 'package:amazon_clone/features/account/screens/account_screen.dart';
+import 'package:amazon_clone/features/home/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:badges/badges.dart' as badge ;
 
@@ -13,14 +15,28 @@ class BottomBar extends StatefulWidget {
 
 class _BottomBarState extends State<BottomBar> {
   int _page=0;
-  double bottomBarWidth=42;
+  double bottomBarWidth=40;
   double bottomBarBorderWidth=5;
-  void UpdatePage(int page){
-    _page=page;
-  }
+
+  List<Widget> pages=[
+    const HomeScreen(),
+    const AccountScreen(),
+    const Center(child: Text('Cart Page'),)
+
+  ];
+
+
+
+void UpdatePage(int page)
+{
+ setState(() {
+   _page=page;
+ });
+}
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
+      body: pages[_page],
 
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _page,
@@ -28,14 +44,17 @@ class _BottomBarState extends State<BottomBar> {
         unselectedItemColor: GlobalVariables.unselectedNavBarColor,
         backgroundColor: GlobalVariables.backgroundColor,
         iconSize: 28,
-        onTap: UpdatePage,
+                onTap:UpdatePage ,
+
                 items: [
           //Home
           BottomNavigationBarItem(
               icon: Container(
 
+
             width:bottomBarWidth ,
             decoration: BoxDecoration(
+
               border: Border(
                   top: BorderSide(
                   width: bottomBarBorderWidth,
@@ -43,11 +62,7 @@ class _BottomBarState extends State<BottomBar> {
                 GlobalVariables.backgroundColor)
               )
             ),
-                child: badge.Badge(
-                  elevation: 0,
-                    badgeContent: const Text('2'),
-                    badgeColor: Colors.white,
-                    child: Icon(Icons.home_outlined)),
+                child: Icon(Icons.home_outlined),
           ),
             label: ''
           ),
@@ -69,9 +84,11 @@ class _BottomBarState extends State<BottomBar> {
           //cart
           BottomNavigationBarItem(
               icon: Container(
-                child: Badge(
-                  backgroundColor: Colors.white,
-                  label: Text('2'),
+
+                child: badge.Badge(
+                  elevation: 0,
+                  badgeColor: Colors.white,
+                  badgeContent: const Text('2'),
                     child: Icon(Icons.shopping_cart_outlined)),
                 width:bottomBarWidth ,
                 decoration: BoxDecoration(
