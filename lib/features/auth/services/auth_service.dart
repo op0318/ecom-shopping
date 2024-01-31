@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'dart:io';
 import 'package:amazon_clone/common/widgets/bottom_bar.dart';
 import 'package:amazon_clone/features/home/screens/home_screen.dart';
 import 'package:amazon_clone/providers/user_provider.dart';
@@ -15,12 +16,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class Authservice {
   //signupuser
-  void signUpUser({
-    required BuildContext context,
-    required String name,
-    required String email,
-    required String password
-  }) async {
+  void signUpUser(
+      {required BuildContext context,
+      required String name,
+      required String email,
+      required String password}) async {
     try {
       User user = User(
           id: '',
@@ -31,70 +31,67 @@ class Authservice {
           token: '',
           type: '');
       //Post api service
-      http.Response res = await http.post(
-          Uri.parse('$uri/signup'),
+      http.Response res = await http.post(Uri.parse('$uri/signup'),
           body: user.tojson(),
           headers: <String, String>{
             'Content-Type': 'application/json;charset=UTF-8'
           });
-      httpErrorHandle(response: res, snackbar: context, onSucces: () {
-        ShowSnakbar(
-            context, 'Account has been created with the same credentials');
-      });
-    }
-    catch (e) {
+      httpErrorHandle(
+          response: res,
+          snackbar: context,
+          onSucces: () {
+            ShowSnakbar(
+                context, 'Account has been created with the same credentials');
+          });
+    } catch (e) {
       ShowSnakbar(context, e.toString());
     }
   }
 
-  void SigninUser({
-    required BuildContext context,
-    required String email,
-    required String password}) async {
+  void SigninUser(
+      {required BuildContext context,
+      required String email,
+      required String password}) async {
     var res = await http.post(Uri.parse('$uri/signin'),
         headers: <String, String>{
           'Content-Type': 'application/json;charset=UTF-8'
         },
-        body: jsonEncode({
-          'email': email,
-          'password': password
-        }));
-    httpErrorHandle(response: res, snackbar: context, onSucces: () async {
-      SharedPreferences pref = await SharedPreferences.getInstance();
-      Provider.of<UserProvider>(context, listen: false).setUser(res.body);
-      pref.setString('x-auth-token', jsonDecode(res.body)['token']);
-      Navigator.pushNamedAndRemoveUntil(
-          context, BottomBar.routeName, (route) => false);
-    });
+        body: jsonEncode({'email': email, 'password': password}));
+    httpErrorHandle(
+        response: res,
+        snackbar: context,
+        onSucces: () async {
+          SharedPreferences pref = await SharedPreferences.getInstance();
+          Provider.of<UserProvider>(context, listen: false).setUser(res.body);
+          pref.setString('x-auth-token', jsonDecode(res.body)['token']);
+          Navigator.pushNamedAndRemoveUntil(
+              context, BottomBar.routeName, (route) => false);
+        });
   }
 
-
-  void GetUserData(BuildContext context) async
-  {
+  void GetUserData(BuildContext context) async {
     try {
-
-
       SharedPreferences pref = await SharedPreferences.getInstance();
       String? token = pref.getString('x-auth-token');
 
-      if(token==null)
-        {
-          pref.setString('x-auth-token', '');
-        }
+      if (token == null) {
+        pref.setString('x-auth-token', '');
+      }
       var tokenRes = await http.post(Uri.parse('$uri/istokenvalid'),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
-            'x-auth-token': token!});
+            'x-auth-token': token!
+          });
       if (tokenRes == true) {
-        final res = await http.get(Uri.parse('$uri/'), headers:
-        <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-          'x-auth-token': token});
+        final res = await http.get(Uri.parse('$uri/'),
+            headers: <String, String>{
+              'Content-Type': 'application/json; charset=UTF-8',
+              'x-auth-token': token
+            });
         UserProvider userProvide = Provider.of<UserProvider>(context);
         userProvide.setUser(res.body);
       }
-    }
-    catch (e) {
+    } catch (e) {
       ShowSnakbar(context, e.toString());
     }
   }

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-String uri='http://192.168.1.49:3000/api';
-class GlobalVariables
-{
+import 'dart:io';
+
+String uri = 'http://192.168.1.24:3000/api';
+
+class GlobalVariables {
   static const List<String> carouselImages = [
     'https://images-eu.ssl-images-amazon.com/images/G/31/img21/Wireless/WLA/TS/D37847648_Accessories_savingdays_Jan22_Cat_PC_1500.jpg',
     'https://images-eu.ssl-images-amazon.com/images/G/31/img2021/Vday/bwl/English.jpg',
@@ -44,5 +46,4 @@ class GlobalVariables
   static const Color greyBackgroundCOlor = Color(0xffebecee);
   static var selectedNavBarColor = Colors.cyan[800]!;
   static const unselectedNavBarColor = Colors.black87;
-
 }

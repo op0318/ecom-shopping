@@ -24,7 +24,7 @@ class _DealOfDayState extends State<DealOfDay> {
           height: 235,
           fit: BoxFit.fitHeight,),
         Container(
-          padding: EdgeInsets.only(left: 15),
+          padding: const EdgeInsets.only(left: 15),
           alignment: Alignment.topLeft,
           child:const  Text('\$100'),
         ),
@@ -35,14 +35,29 @@ class _DealOfDayState extends State<DealOfDay> {
           overflow: TextOverflow.ellipsis,),
         ),
 
-        Row(
-          children: [
-            Image.network('https://m.media-amazon.com/images/I/71eXNIDUGjL._SL1500_.jpg'),
-            Image.network('https://m.media-amazon.com/images/I/610TpF8jQyL._SL1500_.jpg'),
-            Image.network('https://m.media-amazon.com/images/I/81v8DvchdSL._SL1500_.jpg'),
-            Image.network('https://m.media-amazon.com/images/I/61pRKAL2DPL._SL1500_.jpg')
-            
-          ],
+        Container(
+          height: 100,
+          width: double.infinity,
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: [
+                Image.network('https://m.media-amazon.com/images/I/71eXNIDUGjL._SL1500_.jpg'),
+                Image.network('https://m.media-amazon.com/images/I/610TpF8jQyL._SL1500_.jpg'),
+                Image.network('https://m.media-amazon.com/images/I/81v8DvchdSL._SL1500_.jpg'),
+                Image.network('https://m.media-amazon.com/images/I/61pRKAL2DPL._SL1500_.jpg')
+
+              ],
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 15,top: 15,bottom: 15),
+          child: Container(
+            alignment: Alignment.topLeft,
+            child: Text('See all Details',
+            style: TextStyle(color: Colors.cyan)),
+          ),
         )
       ],
     );

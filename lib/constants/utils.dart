@@ -1,9 +1,15 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-void ShowSnakbar(BuildContext context,String text)
-{
-
+void ShowSnakbar(BuildContext context, String text) {
   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(text)));
+}
 
+pickImages() async {
+  List<File> images = [];
+  try {} catch (e) {
+    debugPrint(e.toString());
+  }
 }
