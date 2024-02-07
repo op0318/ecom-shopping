@@ -1,6 +1,7 @@
 import 'package:amazon_clone/common/widgets/custom_button.dart';
 import 'package:amazon_clone/common/widgets/custom_textfield.dart';
 import 'package:amazon_clone/constants/utils.dart';
+import 'package:amazon_clone/features/admin/services/admin_services.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
@@ -17,12 +18,27 @@ class AddProductScreen extends StatefulWidget {
 }
 
 class _AddProductScreenState extends State<AddProductScreen> {
+  final AdminService adminService = AdminService();
+
   final TextEditingController productNameController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
   final TextEditingController priceController = TextEditingController();
   final TextEditingController quantityController = TextEditingController();
 
   String Categeory = 'Mobiles';
+
+  void addProduct() {
+    if (_addProductFormKey.currentState!.validate() && images.isNotEmpty) {
+      adminService.sellProduct(
+          context: context,
+          description: descriptionController.text,
+          name: productNameController.text,
+          price: double.parse(priceController.text),
+          quantity: double.parse(quantityController.text),
+          categeory: Categeory,
+          images: images);
+    }
+  }
 
   @override
   void dispose() {
@@ -41,6 +57,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
     'Fashion'
   ];
   List<File> images = [];
+  final _addProductFormKey = GlobalKey<FormState>();
 
   void selectImages() async {
     var res = await pickImages();
@@ -62,6 +79,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
               title: const Text('Add product'))),
       body: SingleChildScrollView(
         child: Form(
+          key: _addProductFormKey,
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
             child: Column(
@@ -155,7 +173,11 @@ class _AddProductScreenState extends State<AddProductScreen> {
                 SizedBox(
                   height: 10,
                 ),
-                CustomButton(text: 'Sell', onTap: () {})
+                CustomButton(
+                    text: 'Sell',
+                    onTap: () {
+                      addProduct();
+                    })
               ],
             ),
           ),

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 class Product {
   final String name;
   final String description;
@@ -5,20 +7,17 @@ class Product {
   final List<String> images;
   final String Categeory;
   final double price;
-  final String? id;
-  final String? userId;
 
-  Product(
-      {required this.name,
-      required this.description,
-      required this.quantity,
-      required this.images,
-      required this.Categeory,
-      required this.price,
-      required this.id,
-      required this.userId});
+  Product({
+    required this.name,
+    required this.description,
+    required this.quantity,
+    required this.images,
+    required this.Categeory,
+    required this.price,
+  });
 
-  Map<String, dynamic> tomap() {
+  Map<String, dynamic> jsonobject() {
     return {
       'name': name,
       'description': description,
@@ -26,20 +25,21 @@ class Product {
       'images': images,
       'categeory': Categeory,
       'price': price,
-      'id': id,
-      'userId': userId
     };
   }
 
   factory Product.fromMap(Map<String, dynamic> map) {
     return Product(
-        name: map['name'],
-        description: map['description'],
-        quantity: map['quantity'],
-        images: map['images'],
-        Categeory: map['categeory'],
-        price: map['price'],
-        id: map['id'],
-        userId: map['userId']);
+      name: map['name'],
+      description: map['description'],
+      quantity: map['quantity'],
+      images: map['images'],
+      Categeory: map['categeory'],
+      price: map['price'],
+    );
+  }
+
+  String toJson() {
+    return jsonEncode(jsonobject());
   }
 }
