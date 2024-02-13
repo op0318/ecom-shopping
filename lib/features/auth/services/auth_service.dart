@@ -1,8 +1,6 @@
 import 'dart:convert';
 
-import 'dart:io';
 import 'package:amazon_clone/common/widgets/bottom_bar.dart';
-import 'package:amazon_clone/features/home/screens/home_screen.dart';
 import 'package:amazon_clone/providers/user_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:amazon_clone/constants/error_handling.dart';
@@ -79,7 +77,7 @@ class Authservice {
       }
       var tokenRes = await http.post(Uri.parse('$uri/istokenvalid'),
           headers: <String, String>{
-            'Content-Type': 'application/json; charset=UTF-8',
+            'Content-Type': 'application/json;charset=utf-8',
             'x-auth-token': token!
           });
       if (tokenRes == true) {

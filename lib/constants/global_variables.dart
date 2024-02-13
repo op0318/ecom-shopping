@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:io';
 
-String uri = 'http://192.168.1.24:3000/api';
+String uri = 'http://192.168.1.26:3000/api';
 
 class GlobalVariables {
   static const List<String> carouselImages = [

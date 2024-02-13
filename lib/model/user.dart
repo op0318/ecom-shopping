@@ -44,7 +44,7 @@ class User {
   }
 
 //to make a json String
-  String tojson() => jsonEncode(jsonobject());
+  String tojson() => json.encode(jsonobject());
 
 //to make a class object
   factory User.fromJson(String source) {

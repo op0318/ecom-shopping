@@ -9,6 +9,7 @@ import 'package:cloudinary_public/cloudinary_public.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AdminService {
   //This is an api call for adding a product data in the backend
@@ -22,22 +23,17 @@ class AdminService {
       required String name,
       required double price,
       required double quantity,
-      required String categeory,
+      required String Categeory,
       required List<File> images}) async {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
     try {
-      final userProvider = Provider.of<UserProvider>(context, listen: false);
       final cloudinaryPublic = CloudinaryPublic('defz6xpl6', 'amgxnyvi');
       List<String> imageUrl = [];
 
       for (int i = 0; i < images.length; i++) {
         CloudinaryResponse res = await cloudinaryPublic
-            .uploadFile(CloudinaryFile.fromFile(images[i].path));
+            .uploadFile(CloudinaryFile.fromFile(images[i].path, folder: name));
         imageUrl.add(res.secureUrl);
-        if (imageUrl.isNotEmpty) {
-          print('successfully Addded');
-        } else {
-          print('not added');
-        }
       }
 
       Product product = Product(
@@ -45,21 +41,29 @@ class AdminService {
         description: description,
         quantity: quantity,
         images: imageUrl,
-        Categeory: categeory,
+        Categeory: Categeory,
         price: price,
       );
 
-      var res = await http.post(Uri.parse('$uri/admin/addProduct'),
+      http.Response res = await http.post(Uri.parse('$uri/admin/addProduct'),
           headers: {
             'Content-Type': 'application/json; charset=UTF-8',
             'x-auth-token': userProvider.user.token
           },
-          body: product.toJson());
+          body: jsonEncode({
+            "name": name,
+            "description": description,
+            "images": imageUrl,
+            "quantity": quantity,
+            "price": price,
+            "Categeory": Categeory,
+          }));
       httpErrorHandle(
           response: res,
           snackbar: context,
           onSucces: () {
             ShowSnakbar(context, 'Product Added Successfully');
+            Navigator.pop(context);
           });
     } catch (e) {
       ShowSnakbar(context, e.toString());

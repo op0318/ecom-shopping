@@ -17,13 +17,13 @@ class Product {
     required this.price,
   });
 
-  Map<String, dynamic> jsonobject() {
+  Map<String, dynamic> toMap() {
     return {
       'name': name,
       'description': description,
       'quantity': quantity,
       'images': images,
-      'categeory': Categeory,
+      'Categeory': Categeory,
       'price': price,
     };
   }
@@ -34,12 +34,10 @@ class Product {
       description: map['description'],
       quantity: map['quantity'],
       images: map['images'],
-      Categeory: map['categeory'],
+      Categeory: map['Categeory'],
       price: map['price'],
     );
   }
 
-  String toJson() {
-    return jsonEncode(jsonobject());
-  }
+  String toJson() => jsonEncode(toMap());
 }
