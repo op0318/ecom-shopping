@@ -32,12 +32,15 @@ class Product {
     return Product(
       name: map['name'],
       description: map['description'],
-      quantity: map['quantity'],
-      images: map['images'],
+      quantity: map['quantity'].toDouble(),
+      images: List<String>.from(map['images']),
       Categeory: map['Categeory'],
-      price: map['price'],
+      price: map['price'].toDouble(),
     );
   }
 
   String toJson() => jsonEncode(toMap());
+
+  factory Product.fromJson(String source) =>
+      Product.fromMap(json.decode(source));
 }

@@ -4,6 +4,7 @@ import 'package:amazon_clone/constants/error_handling.dart';
 import 'package:amazon_clone/constants/global_variables.dart';
 import 'package:amazon_clone/constants/utils.dart';
 import 'package:amazon_clone/model/product.dart';
+import 'package:amazon_clone/model/user.dart';
 import 'package:amazon_clone/providers/user_provider.dart';
 import 'package:cloudinary_public/cloudinary_public.dart';
 import 'package:flutter/cupertino.dart';
@@ -68,5 +69,39 @@ class AdminService {
     } catch (e) {
       ShowSnakbar(context, e.toString());
     }
+  }
+
+  //get all the products
+
+  Future<List<Product>> fetchAllProducts(BuildContext context) async {
+    List<Product> productList = [];
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    try {
+      http.Response res =
+          await http.get(Uri.parse('$uri/admin/getAllProduct'), headers: {
+        'Content-Type': 'application/json; ' 'charset=UTF-8',
+        'x-auth-token': userProvider.user.token
+      });
+      httpErrorHandle(
+          response: res,
+          snackbar: context,
+          onSucces: () {
+            print(res.body);
+            print(jsonDecode(res.body));
+            for (int i = 0; i < jsonDecode(res.body).length; i++) {
+              productList.add(
+                Product.fromJson(
+                  jsonEncode(
+                    jsonDecode(res.body)[i],
+                  ),
+                ),
+              );
+            }
+          });
+    } catch (e) {
+      ShowSnakbar(context, e.toString());
+    }
+
+    return productList;
   }
 }
