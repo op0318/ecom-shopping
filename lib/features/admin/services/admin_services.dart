@@ -37,15 +37,6 @@ class AdminService {
         imageUrl.add(res.secureUrl);
       }
 
-      Product product = Product(
-        name: name,
-        description: description,
-        quantity: quantity,
-        images: imageUrl,
-        Categeory: Categeory,
-        price: price,
-      );
-
       http.Response res = await http.post(Uri.parse('$uri/admin/addProduct'),
           headers: {
             'Content-Type': 'application/json; charset=UTF-8',
@@ -103,5 +94,28 @@ class AdminService {
     }
 
     return productList;
+  }
+
+  void deleteProduct(
+      {required BuildContext context,
+      required Product product,
+      required VoidCallback onSuccess}) async {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    try {
+      http.Response res = await http.post(Uri.parse('$uri/admin/deleteProduct'),
+          headers: {
+            'Content-Type': 'application/json; ' 'charset=UTF-8',
+            'x-auth-token': userProvider.user.token
+          },
+          body: jsonEncode({"id": product.id}));
+      httpErrorHandle(
+          response: res,
+          snackbar: context,
+          onSucces: () {
+            onSuccess();
+          });
+    } catch (e) {
+      ShowSnakbar(context, e.toString());
+    }
   }
 }

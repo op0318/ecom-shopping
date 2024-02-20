@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 class Product {
+  final String? id;
   final String name;
   final String description;
   final double quantity;
@@ -9,6 +10,7 @@ class Product {
   final double price;
 
   Product({
+    required this.id,
     required this.name,
     required this.description,
     required this.quantity,
@@ -19,6 +21,7 @@ class Product {
 
   Map<String, dynamic> toMap() {
     return {
+      'id': id,
       'name': name,
       'description': description,
       'quantity': quantity,
@@ -30,6 +33,7 @@ class Product {
 
   factory Product.fromMap(Map<String, dynamic> map) {
     return Product(
+      id: map['_id'],
       name: map['name'],
       description: map['description'],
       quantity: map['quantity'].toDouble(),
