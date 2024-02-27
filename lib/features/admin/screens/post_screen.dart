@@ -52,6 +52,7 @@ class _PostScreenState extends State<PostScreen> {
                     crossAxisCount: 2),
                 itemBuilder: (context, index) {
                   final productData = products![index];
+
                   return Column(
                     children: [
                       SizedBox(
