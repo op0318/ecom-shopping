@@ -1,4 +1,4 @@
-# amazon_clone
+# GET IT
 
 A new Flutter project.
 
